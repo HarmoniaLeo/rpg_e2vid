@@ -138,6 +138,8 @@ if __name__ == '__main__':
 
                 last_timestamp = events[-1, 0]
 
+                print(events.shape)
+
                 event_tensor = events_to_voxel_grid_pytorch(events,
                                                             num_bins=model.num_bins,
                                                             width=shape[1],
@@ -145,6 +147,7 @@ if __name__ == '__main__':
                                                             device=device)
                 
                 volume = reconstructor.update_reconstruction(event_tensor, 0, last_timestamp)
+                print(volume.shape)
 
                 volume = torch.nn.functional.interpolate(torch.from_numpy(volume[None,None,:,:]), size = target_shape, mode='nearest')
                 save_dir = os.path.join(target_dir,"e2vid")
