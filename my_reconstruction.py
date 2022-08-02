@@ -140,7 +140,7 @@ if __name__ == '__main__':
                 last_timestamp = events[-1, 0]
 
                 events_ = events.copy()
-                events_[:,0] = events_[:,0] / 1000000
+                #events_[:,0] = events_[:,0] / 1000000
 
                 event_tensor = events_to_voxel_grid_pytorch(events_,
                                                             num_bins=model.num_bins,
