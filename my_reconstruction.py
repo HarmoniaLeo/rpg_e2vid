@@ -65,7 +65,7 @@ if __name__ == '__main__':
         target_shape = [256, 320]
     events_window = int(0.35 * shape[0] * shape[1])
 
-    reconstructor = ImageReconstructor(model, shape[1], shape[0], model.num_bins, args)
+    reconstructor = ImageReconstructor(model, shape[0], shape[1], model.num_bins, args)
 
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
