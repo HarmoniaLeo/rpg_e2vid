@@ -126,10 +126,10 @@ if __name__ == '__main__':
 
                 events = dat_event.load_n_events(int(end_count - start_count))
                 del dat_event
-                events = torch.from_numpy(rfn.structured_to_unstructured(events)[:, [0, 1, 2, 3]].astype(float)).cuda()
+                events = rfn.structured_to_unstructured(events)[:, [0, 1, 2, 3]].astype(float)
 
                 if not memory is None:
-                    events = torch.cat([memory, events])
+                    events = np.concatenate([memory, events])
                 
                 events = events[-events_window:]
                 memory = events
