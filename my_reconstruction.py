@@ -142,7 +142,7 @@ if __name__ == '__main__':
                                                             num_bins=model.num_bins,
                                                             width=shape[1],
                                                             height=shape[0],
-                                                            device=events.device)
+                                                            device=device)
                 
                 reconstructor.update_reconstruction(event_tensor, 0, last_timestamp)
 
