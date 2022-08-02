@@ -63,7 +63,7 @@ if __name__ == '__main__':
         # min_event_count = 200000
         shape = [240,304]
         target_shape = [256, 320]
-    events_window = 5000000
+    events_window = 500000
 
     reconstructor = ImageReconstructor(model, shape[0], shape[1], model.num_bins, args)
 
