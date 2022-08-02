@@ -154,7 +154,7 @@ if __name__ == '__main__':
                 if not os.path.exists(save_dir):
                     os.makedirs(save_dir)
                 
-                ecd = volume.cpu().numpy().copy()
+                ecd = volume.cpu().numpy().copy()[0]
                 
                 ecd.astype(np.uint8).tofile(os.path.join(save_dir,file_name+"_"+str(unique_time)+".npy"))
                             
