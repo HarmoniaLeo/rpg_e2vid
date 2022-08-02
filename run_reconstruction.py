@@ -17,7 +17,9 @@ if __name__ == "__main__":
         description='Evaluating a trained network')
     parser.add_argument('-c', '--path_to_model', required=True, type=str,
                         help='path to model weights')
-    parser.add_argument('-i', '--input_file', required=True, type=str)
+    parser.add_argument('--raw_dir', required=True, type=str)
+    parser.add_argument('--label_dir', required=True, type=str)
+    parser.add_argument('--target_dir', required=True, type=str)
     parser.add_argument('--fixed_duration', dest='fixed_duration', action='store_true')
     parser.set_defaults(fixed_duration=False)
     parser.add_argument('-N', '--window_size', default=None, type=int,
@@ -29,6 +31,7 @@ if __name__ == "__main__":
                               automatically computed as N = width * height * num_events_per_pixel')
     parser.add_argument('--skipevents', default=0, type=int)
     parser.add_argument('--suboffset', default=0, type=int)
+    parser.add_argument('--dataset', type=str)
     parser.add_argument('--compute_voxel_grid_on_cpu', dest='compute_voxel_grid_on_cpu', action='store_true')
     parser.set_defaults(compute_voxel_grid_on_cpu=False)
 
@@ -37,12 +40,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Read sensor size from the first first line of the event file
-    path_to_events = args.input_file
 
-    header = pd.read_csv(path_to_events, delim_whitespace=True, header=None, names=['width', 'height'],
-                         dtype={'width': np.int, 'height': np.int},
-                         nrows=1)
-    width, height = header.values[0]
+    if args.dataset == "gen1":
+        width, height = (304, 240)
+        shape = (256,320)
+    else:
+        width, height = (1280, 720)
+        shape = (512,640)
     print('Sensor size: {} x {}'.format(width, height))
 
     # Load model
@@ -81,14 +85,14 @@ if __name__ == "__main__":
         print('Will compute voxel grid on CPU.')
 
     if args.fixed_duration:
-        event_window_iterator = FixedDurationEventReader(path_to_events,
+        event_window_iterator = FixedDurationEventReader(args.raw_dir, args.label_dir, args.target_dir,
                                                          duration_ms=args.window_duration,
                                                          start_index=start_index)
     else:
-        event_window_iterator = FixedSizeEventReader(path_to_events, num_events=N, start_index=start_index)
+        event_window_iterator = FixedSizeEventReader(args.raw_dir, args.label_dir, args.target_dir, num_events=N, start_index=start_index)
 
     with Timer('Processing entire dataset'):
-        for event_window in event_window_iterator:
+        for event_window, direction in event_window_iterator:
 
             last_timestamp = event_window[-1, 0]
 
@@ -107,6 +111,6 @@ if __name__ == "__main__":
                                                                 device=device)
 
             num_events_in_window = event_window.shape[0]
-            reconstructor.update_reconstruction(event_tensor, start_index + num_events_in_window, last_timestamp)
+            reconstructor.update_reconstruction(event_tensor, start_index + num_events_in_window, last_timestamp, direction)
 
             start_index += num_events_in_window

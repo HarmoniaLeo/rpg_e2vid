@@ -105,6 +105,7 @@ class ImageReconstructor:
 
             # Post-processing, e.g bilateral filter (on CPU)
             out = self.image_filter(out)
+            print(out.shape, out.max(), out.min())
 
-            self.image_writer(out, event_tensor_id, stamp, events=events)
-            self.image_display(out, events)
+            #self.image_writer(out, event_tensor_id, stamp, events=events)
+            #self.image_display(out, events)
