@@ -45,12 +45,6 @@ if __name__ == '__main__':
 
     args.color = False
 
-    model = load_model(args.path_to_model)
-    device = torch.device('cuda:0')
-
-    model = model.to(device)
-    model.eval()
-
     if dataset == "gen4":
         # min_event_count = 800000
         shape = [720,1280]
@@ -65,8 +59,6 @@ if __name__ == '__main__':
         target_shape = [256, 320]
     #events_window = 500000
     events_window = int(shape[0] * shape[1] * 0.35)
-
-    reconstructor = ImageReconstructor(model, shape[0], shape[1], model.num_bins, args)
 
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
@@ -91,6 +83,12 @@ if __name__ == '__main__':
         pbar = tqdm.tqdm(total=len(files), unit='File', unit_scale=True)
 
         for i_file, file_name in enumerate(files):
+
+            model = load_model(args.path_to_model)
+            device = torch.device('cuda:0')
+            model = model.to(device)
+            model.eval()
+            reconstructor = ImageReconstructor(model, shape[0], shape[1], model.num_bins, args)
             # if not file_name == "17-08-23_17-50-46_976500000_1036500000":
             #     continue
             # if not file_name == "moorea_2019-06-26_test_02_000_976500000_1036500000":
@@ -141,7 +139,6 @@ if __name__ == '__main__':
 
                 #events_ = events.copy()
                 #events_[:,0] = events_[:,0] / 1000000
-                print(i_file,events.shape)
 
                 event_tensor = events_to_voxel_grid_pytorch(events,
                                                             num_bins=model.num_bins,
