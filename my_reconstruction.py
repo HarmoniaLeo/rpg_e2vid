@@ -21,8 +21,6 @@ if __name__ == '__main__':
     parser.add_argument('-dataset', type=str, default="gen4")
     parser.add_argument('-c', '--path_to_model', required=True, type=str,
                         help='path to model weights')
-    parser.add_argument('--compute_voxel_grid_on_cpu', dest='compute_voxel_grid_on_cpu', action='store_true')
-    parser.set_defaults(compute_voxel_grid_on_cpu=False)
     parser.add_argument('--fixed_duration', dest='fixed_duration', action='store_true')
     parser.set_defaults(fixed_duration=False)
     parser.add_argument('-N', '--window_size', default=None, type=int,
