@@ -144,9 +144,9 @@ if __name__ == '__main__':
                                                             height=shape[0],
                                                             device=device)
                 
-                reconstructor.update_reconstruction(event_tensor, 0, last_timestamp)
+                volume = reconstructor.update_reconstruction(event_tensor, 0, last_timestamp)
 
-                volume = torch.nn.functional.interpolate(volume[None,:,:,:], size = target_shape, mode='nearest')
+                volume = torch.nn.functional.interpolate(torch.from_numpy(volume[None,None,:,:]), size = target_shape, mode='nearest')
                 save_dir = os.path.join(target_dir,"e2vid")
                 if not os.path.exists(save_dir):
                     os.makedirs(save_dir)
