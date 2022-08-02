@@ -63,8 +63,8 @@ if __name__ == '__main__':
         # min_event_count = 200000
         shape = [240,304]
         target_shape = [256, 320]
-    #events_window = 500000
-    events_window = int(shape[0] * shape[1] * 0.35)
+    events_window = 500000
+    #events_window = int(shape[0] * shape[1] * 0.35)
 
     reconstructor = ImageReconstructor(model, shape[0], shape[1], model.num_bins, args)
 
@@ -140,7 +140,7 @@ if __name__ == '__main__':
                 last_timestamp = events[-1, 0]
 
                 events_ = events.copy()
-                events_[:,0] = events_[:,0] / 1000000
+                #events_[:,0] = events_[:,0] / 1000000
 
                 event_tensor = events_to_voxel_grid_pytorch(events_,
                                                             num_bins=model.num_bins,
