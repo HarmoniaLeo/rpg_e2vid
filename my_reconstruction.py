@@ -91,7 +91,7 @@ if __name__ == '__main__':
         pbar = tqdm.tqdm(total=len(files), unit='File', unit_scale=True)
 
         for i_file, file_name in enumerate(files):
-            if not file_name == "17-04-13_15-05-43_2074500000_2134500000":
+            if not file_name == "17-04-13_15-05-43_3599500000_3659500000":
                 continue
             # if not file_name == "moorea_2019-06-26_test_02_000_976500000_1036500000":
             #     continue
@@ -140,7 +140,7 @@ if __name__ == '__main__':
                 last_timestamp = events[-1, 0]
 
                 events_ = events.copy()
-                #events_[:,0] = events_[:,0] / 1000000
+                events_[:,0] = events_[:,0] / 1000000
 
                 event_tensor = events_to_voxel_grid_pytorch(events_,
                                                             num_bins=model.num_bins,
