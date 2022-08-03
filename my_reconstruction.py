@@ -111,6 +111,8 @@ if __name__ == '__main__':
             memory = None
 
             for bbox_count,unique_time in enumerate(unique_ts):
+                if os.path.exists(os.path.join(os.path.join(os.path.join(target_dir,"e2vid"), mode),file_name+"_"+str(unique_time)+".npy")):
+                    continue
                 end_time = int(unique_time)
                 end_count = f_event.seek_time(end_time)
                 if end_count is None:
