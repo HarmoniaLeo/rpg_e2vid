@@ -76,7 +76,7 @@ if __name__ == '__main__':
             continue
         # Remove duplicates (.npy and .dat)
         # files = files[int(2*len(files)/3):]
-        #files = files[int(len(files)/3):]
+        #files = files[int(len(files)/3):]g
         files = [time_seq_name[:-7] for time_seq_name in files
                         if time_seq_name[-3:] == 'dat']
 
@@ -89,8 +89,8 @@ if __name__ == '__main__':
             model = model.to(device)
             model.eval()
             reconstructor = ImageReconstructor(model, shape[0], shape[1], model.num_bins, args)
-            # if not file_name == "17-08-23_17-50-46_976500000_1036500000":
-            #     continue
+            if not file_name == "17-08-23_17-50-46_976500000_1036500000":
+                continue
             # if not file_name == "moorea_2019-06-26_test_02_000_976500000_1036500000":
             #     continue
             event_file = os.path.join(root, file_name + '_td.dat')
