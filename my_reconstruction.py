@@ -63,7 +63,7 @@ if __name__ == '__main__':
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
 
-    for mode in ["train","val","test"]:
+    for mode in ["train","val"]:
         file_dir = os.path.join(raw_dir, mode)
         root = file_dir
         label_root = os.path.join(label_dir, mode)
@@ -111,8 +111,8 @@ if __name__ == '__main__':
             memory = None
 
             for bbox_count,unique_time in enumerate(unique_ts):
-                if os.path.exists(os.path.join(os.path.join(os.path.join(target_dir,"e2vid"), mode),file_name+"_"+str(unique_time)+".npy")):
-                    continue
+                # if os.path.exists(os.path.join(os.path.join(os.path.join(target_dir,"e2vid"), mode),file_name+"_"+str(unique_time)+".npy")):
+                #     continue
                 end_time = int(unique_time)
                 end_count = f_event.seek_time(end_time)
                 if end_count is None:
