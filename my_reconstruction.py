@@ -84,8 +84,8 @@ if __name__ == '__main__':
 
         for i_file, file_name in enumerate(files):
 
-            if not file_name == "17-04-13_15-05-43_2074500000_2134500000":
-                continue
+            # if not file_name == "17-04-13_15-05-43_2074500000_2134500000":
+            #     continue
             # if not file_name == "moorea_2019-06-26_test_02_000_976500000_1036500000":
             #     continue
 
